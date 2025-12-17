@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useAppStore } from '../stores/appStore'
 import LivePreview from '../components/LivePreview'
 import ApprovalQueue from '../components/ApprovalQueue'
