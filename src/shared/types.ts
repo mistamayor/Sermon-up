@@ -82,7 +82,7 @@ export interface QueueItem {
   source: 'voice' | 'manual'
   action: ActionType
   status: QueueItemStatus
-  createdAt: Date
+  createdAt: number  // Unix timestamp in milliseconds (IPC-safe)
   confidence: number
   intentType?: IntentType
 }

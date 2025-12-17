@@ -94,7 +94,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   transcripts: [],
   addTranscript: (segment) =>
     set((state) => ({
-      transcripts: [...state.transcripts.slice(-50), segment], // Keep last 50
+      transcripts: [...state.transcripts.slice(-49), segment], // Keep last 50 (49 + 1 new)
     })),
   clearTranscripts: () => set({ transcripts: [] }),
 

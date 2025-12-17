@@ -11,15 +11,29 @@ const tabs: { id: SettingsTab; label: string; icon: string }[] = [
   { id: 'ai', label: 'AI Behaviors', icon: 'psychology' },
 ]
 
+// Default settings for reset
+const defaultSettings = {
+  fontSize: 64,
+  fontFamily: 'Inter',
+  fontWeight: 'Bold',
+  fontColor: '#FFFFFF',
+  sentimentAnalysis: true,
+  autoVerseDetection: true,
+  motionBackgrounds: false,
+  transitionStyle: 'Fade' as const,
+}
+
 export default function Settings() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('general')
-  const [fontSize, setFontSize] = useState(64)
-  const [fontFamily, setFontFamily] = useState('Inter')
-  const [fontWeight, setFontWeight] = useState('Bold')
-  const [fontColor, setFontColor] = useState('#FFFFFF')
-  const [sentimentAnalysis, setSentimentAnalysis] = useState(true)
-  const [autoVerseDetection, setAutoVerseDetection] = useState(true)
-  const [motionBackgrounds, setMotionBackgrounds] = useState(false)
+  const [fontSize, setFontSize] = useState(defaultSettings.fontSize)
+  const [fontFamily, setFontFamily] = useState(defaultSettings.fontFamily)
+  const [fontWeight, setFontWeight] = useState(defaultSettings.fontWeight)
+  const [fontColor, setFontColor] = useState(defaultSettings.fontColor)
+  const [sentimentAnalysis, setSentimentAnalysis] = useState(defaultSettings.sentimentAnalysis)
+  const [autoVerseDetection, setAutoVerseDetection] = useState(defaultSettings.autoVerseDetection)
+  const [motionBackgrounds, setMotionBackgrounds] = useState(defaultSettings.motionBackgrounds)
+  const [transitionStyle, setTransitionStyle] = useState(defaultSettings.transitionStyle)
+  const [isSaving, setIsSaving] = useState(false)
 
   const themes = [
     { id: 'cosmic', name: 'Cosmic Night', active: true },
@@ -82,11 +96,67 @@ export default function Settings() {
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="px-4 py-2 rounded-lg bg-surface-dark border border-border-dark text-white font-medium hover:bg-border-dark transition-colors">
+              <button
+                onClick={async () => {
+                  try {
+                    const savedSettings = await window.electronAPI?.getSettings()
+                    if (savedSettings) {
+                      const s = savedSettings as typeof defaultSettings
+                      setFontSize(s.fontSize ?? defaultSettings.fontSize)
+                      setFontFamily(s.fontFamily ?? defaultSettings.fontFamily)
+                      setFontWeight(s.fontWeight ?? defaultSettings.fontWeight)
+                      setFontColor(s.fontColor ?? defaultSettings.fontColor)
+                      setSentimentAnalysis(s.sentimentAnalysis ?? defaultSettings.sentimentAnalysis)
+                      setAutoVerseDetection(s.autoVerseDetection ?? defaultSettings.autoVerseDetection)
+                      setMotionBackgrounds(s.motionBackgrounds ?? defaultSettings.motionBackgrounds)
+                      setTransitionStyle(s.transitionStyle ?? defaultSettings.transitionStyle)
+                    } else {
+                      // Reset to defaults if no saved settings
+                      setFontSize(defaultSettings.fontSize)
+                      setFontFamily(defaultSettings.fontFamily)
+                      setFontWeight(defaultSettings.fontWeight)
+                      setFontColor(defaultSettings.fontColor)
+                      setSentimentAnalysis(defaultSettings.sentimentAnalysis)
+                      setAutoVerseDetection(defaultSettings.autoVerseDetection)
+                      setMotionBackgrounds(defaultSettings.motionBackgrounds)
+                      setTransitionStyle(defaultSettings.transitionStyle)
+                    }
+                  } catch (error) {
+                    console.error('Failed to discard changes:', error)
+                  }
+                }}
+                className="px-4 py-2 rounded-lg bg-surface-dark border border-border-dark text-white font-medium hover:bg-border-dark transition-colors"
+              >
                 Discard
               </button>
-              <button className="px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-blue-600 transition-colors">
-                Save Changes
+              <button
+                disabled={isSaving}
+                onClick={async () => {
+                  setIsSaving(true)
+                  try {
+                    await window.electronAPI?.updateSettings({
+                      display: {
+                        fontSize,
+                        fontFamily,
+                        fontColor,
+                        fontWeight,
+                        transitionStyle,
+                      },
+                      ai: {
+                        sentimentAnalysis,
+                        autoVerseDetection,
+                        motionBackgrounds,
+                      },
+                    })
+                  } catch (error) {
+                    console.error('Failed to save settings:', error)
+                  } finally {
+                    setIsSaving(false)
+                  }
+                }}
+                className="px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSaving ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           </div>
@@ -242,8 +312,9 @@ export default function Settings() {
                   {['Fade', 'Slide', 'Zoom'].map((style) => (
                     <button
                       key={style}
+                      onClick={() => setTransitionStyle(style)}
                       className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        style === 'Fade'
+                        transitionStyle === style
                           ? 'bg-primary/10 text-primary border border-primary/20'
                           : 'bg-background-dark text-text-secondary border border-border-dark hover:border-primary/50'
                       }`}

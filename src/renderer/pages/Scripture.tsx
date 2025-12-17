@@ -10,18 +10,24 @@ export default function Scripture() {
   const [selectedBook, setSelectedBook] = useState<string | null>(null)
   const [books, setBooks] = useState<Book[]>([])
 
-  // Load books on mount
+  // Load books when translation changes
   useEffect(() => {
     const loadBooks = async () => {
       try {
-        const result = await window.electronAPI?.getBooks(1) // Assuming KJV is ID 1
+        // Get all translations to find the ID for the selected translation code
+        const translations = await window.electronAPI?.getTranslations()
+        const translationList = (translations as { id: number; code: string }[]) || []
+        const translation = translationList.find((t) => t.code === selectedTranslation)
+        const translationId = translation?.id ?? 1 // Fall back to ID 1 if not found
+
+        const result = await window.electronAPI?.getBooks(translationId)
         setBooks((result as Book[]) || [])
       } catch (error) {
         console.error('Failed to load books:', error)
       }
     }
     loadBooks()
-  }, [])
+  }, [selectedTranslation])
 
   // Search effect
   useEffect(() => {

@@ -21,6 +21,7 @@ export default function LiveProjection() {
   } = useAppStore()
 
   const [searchQuery, setSearchQuery] = useState('')
+  const [isAutoSwitch, setIsAutoSwitch] = useState(true)
 
   return (
     <div className="flex flex-1 overflow-hidden h-full bg-[#0b0e14]">
@@ -156,7 +157,12 @@ export default function LiveProjection() {
               Bible Translation
             </h3>
             <label className="relative inline-flex items-center cursor-pointer group">
-              <input type="checkbox" className="sr-only peer" defaultChecked />
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={isAutoSwitch}
+                onChange={(e) => setIsAutoSwitch(e.target.checked)}
+              />
               <div className="w-8 h-4 bg-slate-700 peer-checked:bg-indigo-500 rounded-full after:content-[''] after:absolute after:top-[0px] after:left-[0px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full" />
               <span className="ml-2 text-[10px] font-bold text-text-secondary peer-checked:text-indigo-500 uppercase">
                 Auto-Switch

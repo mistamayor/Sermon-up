@@ -179,7 +179,7 @@ export class RulesEngine {
       source: 'voice',
       action,
       status: 'pending',
-      createdAt: new Date(),
+      createdAt: Date.now(),  // Unix timestamp for IPC safety
       confidence,
       intentType: intent.type,
     }
