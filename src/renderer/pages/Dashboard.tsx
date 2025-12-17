@@ -6,7 +6,7 @@ import SearchBar from '../components/SearchBar'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { history, currentContent, sttLatency, isOnline } = useAppStore()
+  const { history, currentContent, sttLatency, isOnline, clearScreen, setBlackout } = useAppStore()
   const [searchQuery, setSearchQuery] = useState('')
 
   // Sample suggestions for demo
@@ -46,10 +46,16 @@ export default function Dashboard() {
                 Live Output
               </h3>
               <div className="flex gap-2">
-                <button className="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs font-medium text-text-secondary hover:text-white transition-colors">
+                <button
+                  onClick={() => clearScreen()}
+                  className="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs font-medium text-text-secondary hover:text-white transition-colors"
+                >
                   Clear Screen
                 </button>
-                <button className="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs font-medium text-text-secondary hover:text-white transition-colors">
+                <button
+                  onClick={() => setBlackout(true)}
+                  className="px-3 py-1.5 rounded bg-surface-dark border border-border-dark text-xs font-medium text-text-secondary hover:text-white transition-colors"
+                >
                   Blackout
                 </button>
               </div>

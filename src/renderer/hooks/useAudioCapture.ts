@@ -91,8 +91,10 @@ export function useAudioCapture(options: AudioCaptureOptions = {}) {
         setAudioLevels({ rms, peak })
 
         // Send audio data if callback provided
+        // Create a copy of the buffer to prevent async consumers from receiving corrupted data
         if (onAudioData) {
-          onAudioData(dataArray)
+          const bufferCopy = new Float32Array(dataArray)
+          onAudioData(bufferCopy)
         }
 
         animationFrameRef.current = requestAnimationFrame(updateLevels)

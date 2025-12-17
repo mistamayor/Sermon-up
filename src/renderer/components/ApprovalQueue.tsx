@@ -1,5 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAppStore } from '../stores/appStore'
+
+// Countdown timer component for queue items
+function CountdownBadge({ initialSeconds = 15, onExpire }: { initialSeconds?: number; onExpire?: () => void }) {
+  const [seconds, setSeconds] = useState(initialSeconds)
+
+  useEffect(() => {
+    if (seconds <= 0) {
+      onExpire?.()
+      return
+    }
+
+    const interval = setInterval(() => {
+      setSeconds((prev) => Math.max(0, prev - 1))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [seconds, onExpire])
+
+  // Format as M:SS
+  const minutes = Math.floor(seconds / 60)
+  const secs = seconds % 60
+  const formatted = `${minutes}:${secs.toString().padStart(2, '0')}`
+
+  return (
+    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm animate-pulse">
+      <span className="material-symbols-outlined" style={{ fontSize: '10px' }}>
+        timer
+      </span>
+      <span className="text-[10px] font-bold tabular-nums">{formatted}</span>
+    </div>
+  )
+}
 
 export default function ApprovalQueue() {
   const { queue, updateQueueItem, removeFromQueue, stageContent } = useAppStore()
@@ -96,12 +128,10 @@ export default function ApprovalQueue() {
                     <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wide">
                       Pending
                     </span>
-                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm animate-pulse">
-                      <span className="material-symbols-outlined" style={{ fontSize: '10px' }}>
-                        timer
-                      </span>
-                      <span className="text-[10px] font-bold tabular-nums">0:15</span>
-                    </div>
+                    <CountdownBadge
+                      initialSeconds={15}
+                      onExpire={() => handleDismiss(item.id)}
+                    />
                   </div>
                   <span className="text-[10px] font-mono text-text-secondary">
                     Match {Math.round(item.confidence * 100)}%

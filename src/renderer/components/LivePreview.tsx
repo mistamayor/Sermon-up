@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import type { ScripturePassage } from '../../shared/types'
 
 interface LivePreviewProps {
@@ -7,8 +7,39 @@ interface LivePreviewProps {
 }
 
 export default function LivePreview({ content, className = '' }: LivePreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  // Track fullscreen state changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === containerRef.current)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
+  }, [])
+
+  // Toggle fullscreen
+  const handleFullscreenToggle = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement) {
+        // Enter fullscreen
+        if (containerRef.current) {
+          await containerRef.current.requestFullscreen()
+        }
+      } else {
+        // Exit fullscreen
+        await document.exitFullscreen()
+      }
+    } catch (error) {
+      console.error('Fullscreen error:', error)
+    }
+  }, [])
+
   return (
     <div
+      ref={containerRef}
       className={`relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl border border-border-dark group ${className}`}
     >
       {/* Background */}
@@ -48,11 +79,13 @@ export default function LivePreview({ content, className = '' }: LivePreviewProp
       {/* Hover Controls */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
         <button
+          onClick={handleFullscreenToggle}
           className="bg-black/60 hover:bg-black/80 text-white p-2 rounded-lg backdrop-blur-sm transition-colors"
-          title="Fullscreen"
+          title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+          aria-pressed={isFullscreen}
         >
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-            fullscreen
+            {isFullscreen ? 'fullscreen_exit' : 'fullscreen'}
           </span>
         </button>
       </div>

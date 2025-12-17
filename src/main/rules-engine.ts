@@ -438,10 +438,19 @@ export class RulesEngine {
   }
 
   /**
-   * Update cooldown for a reference.
+   * Update cooldown for a reference and clean up stale entries.
    */
   private updateCooldown(key: string): void {
     this.cooldownMap.set(key, Date.now())
+
+    // Clean up stale entries to prevent memory leak
+    const now = Date.now()
+    const cooldownMs = this.cooldownSeconds * 1000
+    for (const [k, timestamp] of this.cooldownMap.entries()) {
+      if (now - timestamp > cooldownMs) {
+        this.cooldownMap.delete(k)
+      }
+    }
   }
 
   /**
