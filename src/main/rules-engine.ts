@@ -359,6 +359,7 @@ export class RulesEngine {
           verseStart: parseInt(verseMatch[1], 10),
           verseEnd: verseMatch[2] ? parseInt(verseMatch[2], 10) : undefined,
           translation: this.chapterContext.translation,
+          bookFromContext: true,  // Flag that book was inferred from context
         }
       }
     }
@@ -381,8 +382,8 @@ export class RulesEngine {
       confidence *= 1.1
     }
 
-    // Penalty for using chapter context
-    if (!reference.book && this.chapterContext) {
+    // Penalty for using chapter context (book was inferred, not explicitly stated)
+    if (reference.bookFromContext) {
       confidence *= 0.9
     }
 

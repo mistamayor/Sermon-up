@@ -37,6 +37,7 @@ export interface ScriptureReference {
   verseStart?: number
   verseEnd?: number
   translation: string
+  bookFromContext?: boolean  // True when book was inferred from chapter context
 }
 
 export interface ScripturePassage {

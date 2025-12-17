@@ -46,29 +46,33 @@ contextBridge.exposeInMainWorld('electronAPI', {
   closeWindow: () =>
     ipcRenderer.send('window:close'),
 
-  // Event listeners
+  // Event listeners - use named listeners for proper cleanup
   onProjectionContent: (callback: (content: unknown) => void) => {
-    ipcRenderer.on('projection:content', (_event, content) => callback(content))
+    const listener = (_event: Electron.IpcRendererEvent, content: unknown) => callback(content)
+    ipcRenderer.on('projection:content', listener)
     return () => {
-      ipcRenderer.removeAllListeners('projection:content')
+      ipcRenderer.removeListener('projection:content', listener)
     }
   },
   onProjectionBlackout: (callback: (enabled: boolean) => void) => {
-    ipcRenderer.on('projection:blackout', (_event, enabled) => callback(enabled))
+    const listener = (_event: Electron.IpcRendererEvent, enabled: boolean) => callback(enabled)
+    ipcRenderer.on('projection:blackout', listener)
     return () => {
-      ipcRenderer.removeAllListeners('projection:blackout')
+      ipcRenderer.removeListener('projection:blackout', listener)
     }
   },
   onTranscript: (callback: (segment: unknown) => void) => {
-    ipcRenderer.on('stt:transcript', (_event, segment) => callback(segment))
+    const listener = (_event: Electron.IpcRendererEvent, segment: unknown) => callback(segment)
+    ipcRenderer.on('stt:transcript', listener)
     return () => {
-      ipcRenderer.removeAllListeners('stt:transcript')
+      ipcRenderer.removeListener('stt:transcript', listener)
     }
   },
   onQueueAdd: (callback: (item: unknown) => void) => {
-    ipcRenderer.on('queue:add', (_event, item) => callback(item))
+    const listener = (_event: Electron.IpcRendererEvent, item: unknown) => callback(item)
+    ipcRenderer.on('queue:add', listener)
     return () => {
-      ipcRenderer.removeAllListeners('queue:add')
+      ipcRenderer.removeListener('queue:add', listener)
     }
   },
 })

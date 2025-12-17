@@ -451,12 +451,22 @@ export class ScriptureDatabase {
   }
 
   searchScripture(query: string, limit: number = 20): ScripturePassage[] {
+    // Handle empty/whitespace-only input
+    const trimmedQuery = query.trim()
+    if (!trimmedQuery) {
+      return []
+    }
+
     // First try to parse as a reference
-    const refMatch = this.parseReference(query)
+    const refMatch = this.parseReference(trimmedQuery)
     if (refMatch) {
       const passage = this.getPassage(refMatch)
       if (passage) return [passage]
     }
+
+    // Sanitize query for FTS5 by wrapping in double quotes (phrase search)
+    // and escaping any embedded double quotes
+    const sanitizedQuery = '"' + trimmedQuery.replace(/"/g, '""') + '"'
 
     // Fall back to full-text search
     const results = this.db
@@ -470,7 +480,7 @@ export class ScriptureDatabase {
         ORDER BY rank
         LIMIT ?
       `)
-      .all(query, limit) as Array<Verse & { book_name: string; translation_code: string }>
+      .all(sanitizedQuery, limit) as Array<Verse & { book_name: string; translation_code: string }>
 
     return results.map((row) => ({
       reference: {
