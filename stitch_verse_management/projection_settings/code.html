@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumina Projector - Settings</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1c1f27",
+                        "surface-dark-lighter": "#282e39",
+                        "text-secondary": "#9da6b9"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282e39; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4354; 
+        }
+        
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #135bec;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #135bec;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-surface-dark-lighter bg-background-dark px-4 py-3 md:px-10">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Lumina Projector</h2>
+<span class="hidden md:inline-flex items-center rounded-full bg-green-400/10 px-2 py-0.5 text-xs font-medium text-green-400 ring-1 ring-inset ring-green-400/20">System: Ready</span>
+</div>
+<div class="flex items-center justify-end gap-4 md:gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-medium" href="#">Settings</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-blue-600 transition-colors">
+<span class="truncate">Go Live</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border border-surface-dark-lighter cursor-pointer" data-alt="User profile avatar showing a colorful abstract gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD7WZt-6vRN3YsmdLQleclZZ37iFyvmjvNKGT4BPk7-s-l5bjOVJfpuEpw1KWeuj3AcI0enqOMIGx8xGIm5eTfloe_Oi_XcBc88Xbdd7eNQdbfDpyKxbG_s9vfucCKen-bIzzuYNCs9drituO-0IX7jkqRvaYMC-UJzhpieny-kkB3O8JHOuq2Dli31P2AOyMiXS9wJ8udCy_Y3ZdGXc4Ohb3U1RaeYBJ6-X7ZjzOHavr-5PY7WbwUQmNntBqTeQgV2bUlgqUkviNA");'></div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden lg:flex w-72 flex-col border-r border-surface-dark-lighter bg-background-dark p-4 overflow-y-auto">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="text-white text-base font-medium px-3">Configuration</h1>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-dark-lighter text-primary" href="#">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+<p class="text-sm font-medium">General Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">monitor</span>
+<p class="text-sm font-medium">Display &amp; Output</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">text_fields</span>
+<p class="text-sm font-medium">Typography</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">wallpaper</span>
+<p class="text-sm font-medium">Backgrounds</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+<p class="text-sm font-medium">AI Behaviors</p>
+</a>
+</div>
+<div class="h-px bg-surface-dark-lighter mx-3"></div>
+<div class="flex flex-col gap-2">
+<h1 class="text-white text-base font-medium px-3">Automation</h1>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<p class="text-sm font-medium">Schedule</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-dark-lighter/50 transition-colors text-text-secondary hover:text-white" href="#">
+<span class="material-symbols-outlined text-[20px]">playlist_play</span>
+<p class="text-sm font-medium">Loops &amp; Playlists</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8">
+<div class="max-w-[1024px] mx-auto flex flex-col gap-8">
+<!-- Page Heading -->
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<h1 class="text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">Projection Settings</h1>
+<p class="text-text-secondary text-base font-normal mt-2">Configure real-time output, themes, and AI triggers.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 border border-surface-dark-lighter bg-transparent text-white text-sm font-bold hover:bg-surface-dark-lighter transition-colors">
+                            Discard
+                        </button>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold hover:bg-blue-600 transition-colors shadow-[0_0_15px_rgba(19,91,236,0.3)]">
+                            Save Changes
+                        </button>
+</div>
+</div>
+<!-- Live Preview Section -->
+<section class="@container">
+<div class="flex flex-col gap-4 rounded-xl border border-surface-dark-lighter bg-surface-dark p-1 shadow-2xl">
+<div class="flex items-center justify-between px-3 py-2">
+<div class="flex items-center gap-2">
+<span class="flex size-2 rounded-full bg-red-500 animate-pulse"></span>
+<span class="text-xs font-bold text-white uppercase tracking-wider">Live Output Preview</span>
+</div>
+<span class="text-xs text-text-secondary">1920 x 1080 • 16:9</span>
+</div>
+<!-- Projector Canvas -->
+<div class="relative w-full aspect-video rounded-lg overflow-hidden bg-black group" data-alt="Abstract dark blue and purple nebula background representing spiritual atmosphere">
+<!-- Background Layer -->
+<div class="absolute inset-0 bg-cover bg-center transition-all duration-700" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwgDvv6GbK4JNpwHOeLrPus_E4U1-_mtNA8yjVzoMijoFPwNdDHcRPLWLYLN50A7_OcLVJ9NoE7Q9xibKPT3QldkERTOTuU5KZFf9xgPnbbOkZmZdtLZdDFp7w2yzrHvSuCIyk7-E5XAgtay_uf0ZphflJ7zotqlQ4TwcskBMIAX0kopBQus5Cxtno5KbphdYcuQJ-yKQaeMEEIbYwvplzZUnkah1FBRlG2bpRD-GMBxHd8uszGJ92VVm3QXc0MxrCHQmdgRK_O7Y"); opacity: 0.8;'></div>
+<div class="absolute inset-0 bg-black/40"></div>
+<!-- Text Layer -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 md:p-16">
+<h2 class="text-white text-3xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-lg tracking-tight mb-6 font-display transition-all duration-300">
+                                     "For God so loved the world that he gave his one and only Son..."
+                                 </h2>
+<p class="text-white/90 text-xl md:text-2xl font-medium tracking-wide uppercase">John 3:16</p>
+</div>
+<!-- Hover Actions -->
+<div class="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 bg-surface-dark/80 backdrop-blur text-white rounded hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Settings Panels -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+<!-- Typography Card -->
+<div class="flex flex-col gap-4 p-5 rounded-xl border border-surface-dark-lighter bg-surface-dark">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2 text-white">
+<span class="material-symbols-outlined text-text-secondary">text_fields</span>
+<h3 class="text-lg font-bold">Typography</h3>
+</div>
+<span class="text-xs text-primary font-medium cursor-pointer hover:underline">Reset Default</span>
+</div>
+<!-- Font Family -->
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Font Family</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-surface-dark-lighter bg-background-dark px-4 py-2.5 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-sm">
+<option>Inter (Sans-serif)</option>
+<option>Merriweather (Serif)</option>
+<option>Roboto Mono (Monospace)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-text-secondary pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Font Size Slider -->
+<div class="flex flex-col gap-3 pt-2">
+<div class="flex items-center justify-between">
+<label class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Font Size</label>
+<span class="text-white text-xs font-mono bg-surface-dark-lighter px-2 py-0.5 rounded">64px</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-xs text-text-secondary">Aa</span>
+<div class="relative flex-1 h-1.5 rounded-full bg-surface-dark-lighter cursor-pointer group">
+<div class="absolute h-full w-[65%] rounded-full bg-primary"></div>
+<div class="absolute left-[65%] top-1/2 -translate-y-1/2 size-4 rounded-full bg-white shadow-md cursor-grab active:cursor-grabbing border-2 border-primary hover:scale-110 transition-transform"></div>
+</div>
+<span class="text-lg text-text-secondary">Aa</span>
+</div>
+</div>
+<!-- Color & Weight -->
+<div class="grid grid-cols-2 gap-4 pt-2">
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Color</label>
+<div class="flex items-center gap-2 p-2 rounded-lg border border-surface-dark-lighter bg-background-dark">
+<div class="size-6 rounded bg-white border border-gray-600"></div>
+<span class="text-sm text-white font-mono">#FFFFFF</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Weight</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-surface-dark-lighter bg-background-dark px-3 py-2 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-sm">
+<option>Regular</option>
+<option>Medium</option>
+<option selected="">Bold</option>
+<option>Black</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Themes Card -->
+<div class="flex flex-col gap-4 p-5 rounded-xl border border-surface-dark-lighter bg-surface-dark">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2 text-white">
+<span class="material-symbols-outlined text-text-secondary">wallpaper</span>
+<h3 class="text-lg font-bold">Active Theme</h3>
+</div>
+<button class="text-xs bg-surface-dark-lighter hover:bg-white/10 text-white px-3 py-1 rounded transition-colors">Browse All</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+<!-- Theme Item 1 (Active) -->
+<div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer ring-2 ring-primary ring-offset-2 ring-offset-surface-dark">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Dark blue nebula space background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4P4T1NVtt16-coHRRMWRV2ndZo5yThLzJ2rzW3waiWj5YD_JjqNes9O40vMpBOjPjZdRxvvhOOrb8xWO3oN7SQYN3o8oMa8NtBE03-o2lpfyZqX20yKIaUe5BxMOizhZ9xzGG5Y48NIw3IUkPeYt7-o5swHbGCv1h_VIDeY1FPoWYJXIo-ir4Hjs0-mPpCmZWW9EatBFMKcTttt2Pxgq71_joRQ-WdS_CjGZjc8BUnzVto9IwvGlFp1coTnRFTEFINs_16cw3O1c");'></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+<div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">Cosmic Night</p>
+</div>
+<div class="absolute top-2 right-2 bg-primary text-white text-[10px] px-1.5 py-0.5 rounded font-bold">Active</div>
+</div>
+<!-- Theme Item 2 -->
+<div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-surface-dark-lighter hover:ring-offset-1 hover:ring-offset-surface-dark transition-all">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Soft golden sunrise over mountains background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKPaasvITpSTfCTXqIKY56lXL-xIfBE4bCOKILzTeffw3GkSgo4vlohxNRZX9ZIG_1RB-XrDlbktDHGq4-nksstRv_Q1tFgQHOILZ4ZS9RWcxFpTXX_vlsYZkWGR51jpzAHPhhDfgVzrDHQ92SP5zD00Bhe7qhvWmJeO5c8AB7OiNCRsJ5fGZjTfB04ERmmKc0HZJhK-QvOiIXZNGDe2c9YeLIQcxHcVY5Krbg3qCyllNpX66648B3VKz6hxOVHwpAJqGEiofCsiA");'></div>
+<div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">Morning Grace</p>
+</div>
+</div>
+<!-- Theme Item 3 -->
+<div class="group relative aspect-square rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-surface-dark-lighter hover:ring-offset-1 hover:ring-offset-surface-dark transition-all">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Abstract minimalist geometric shapes dark background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDd4fEVUtN7mFHGZtVS0giMUyOXjdQ_2CMv7hd6Rf88RNtGyFOCbBbeLeZy8hVYLPKjC5WQQOPXJMMZwpD14zuBBbmLOvzKZZF4I9B0qCZAmfVKF1bA4PC9CTUJJWbll55IId-T68GY1NHoZ0iaetj6601ss_xR_BdTM31X4tylZ5WhsDPIWUG8sL-E8EFEiFLtWN1-8oyfHSm5ZT8HAyCAp0f_phP3YDXgIQrFihnBUDJyuozGcLp69hmTpioUXzLsBUSuQEm7prs");'></div>
+<div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
+<p class="text-[10px] font-bold text-white">Modern Geo</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-1">
+<label class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Transition Style</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 text-xs font-medium rounded bg-surface-dark-lighter text-white hover:bg-white/10 border border-transparent focus:border-primary">Fade</button>
+<button class="flex-1 py-2 text-xs font-medium rounded bg-background-dark text-text-secondary hover:text-white border border-surface-dark-lighter">Slide</button>
+<button class="flex-1 py-2 text-xs font-medium rounded bg-background-dark text-text-secondary hover:text-white border border-surface-dark-lighter">Zoom</button>
+</div>
+</div>
+</div>
+<!-- AI Behaviors Card -->
+<div class="flex flex-col gap-4 p-5 rounded-xl border border-surface-dark-lighter bg-surface-dark xl:col-span-2">
+<div class="flex items-center gap-2 text-white mb-2">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h3 class="text-lg font-bold">AI Automation</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Toggle Item 1 -->
+<div class="flex items-start gap-4">
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-surface-dark-lighter appearance-none cursor-pointer transition-all duration-300" id="sentiment" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-dark-lighter cursor-pointer transition-colors duration-300" for="sentiment"></label>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Sentiment Analysis</span>
+<span class="text-xs text-text-secondary leading-normal">Automatically adjusts background mood based on verse content (e.g., joyful vs. somber).</span>
+</div>
+</div>
+<!-- Toggle Item 2 -->
+<div class="flex items-start gap-4">
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-surface-dark-lighter appearance-none cursor-pointer transition-all duration-300" id="auto-verse" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-dark-lighter cursor-pointer transition-colors duration-300" for="auto-verse"></label>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Auto-Verse Detection</span>
+<span class="text-xs text-text-secondary leading-normal">Listens to the speaker audio and queues verses in real-time.</span>
+</div>
+</div>
+<!-- Toggle Item 3 -->
+<div class="flex items-start gap-4">
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-surface-dark-lighter appearance-none cursor-pointer transition-all duration-300" id="motion" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-dark-lighter cursor-pointer transition-colors duration-300" for="motion"></label>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-white">Motion Backgrounds Only</span>
+<span class="text-xs text-text-secondary leading-normal">Prioritize video backgrounds over static images for all slides.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-10"></div> <!-- Spacer -->
+</div>
+</main>
+</div>
+</body></html>

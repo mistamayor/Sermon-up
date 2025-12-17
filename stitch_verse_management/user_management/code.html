@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Management - VersePro AI</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1e293b", // Matching the request's surface color
+                        "card-dark": "#282e39", // Matching provided component color
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark mode feeling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111318; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282e39; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151; 
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- SIDEBAR -->
+<aside class="flex w-64 flex-col bg-[#111318] border-r border-[#282e39] shrink-0 transition-all duration-300">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="Abstract gradient logo in blue and purple" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAF-RlRpxeE-p5uPSKEUXHsu0ESaHuy01FXfVJHCTpJ80PeG5O30Via1Buh3RPBk0fw7qufj94280FLcIW1SnF76irxWR-amLWkkpoQpDB6YyfbdmsAhTGQ1Et-DtqL8G5uz7GISCBjRe6PlL5Xo5IWlAhE2pFmR1HymvodUQLXophpwvoBR2Jigf5EcIHEF7OJYhCxgrkUTdEa0uQT0Plq4GUdmrkbb_E4VCm2RQ4PszXYhotK0Im25ZDgiTBfzAlOSPjTWiD3LXI");'></div>
+<h1 class="text-white text-lg font-bold leading-normal tracking-tight">VersePro AI</h1>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#282e39] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">dashboard</span>
+<span class="text-sm font-medium leading-normal">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#282e39] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">cast</span>
+<span class="text-sm font-medium leading-normal">Projection</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#282e39] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">menu_book</span>
+<span class="text-sm font-medium leading-normal">Scripture DB</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined icon-fill">group</span>
+<span class="text-sm font-medium leading-normal">User Mgmt</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-[#282e39] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-white">settings</span>
+<span class="text-sm font-medium leading-normal">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Profile -->
+<div class="flex items-center gap-3 px-3 py-3 mt-auto rounded-lg hover:bg-[#282e39] cursor-pointer transition-colors">
+<div class="size-8 rounded-full bg-slate-700 overflow-hidden" data-alt="User avatar placeholder">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN6dXfsH1Ut6xTdhh4UGYfEnxNFUvrlu0RACR9LmLOuNDSpuHJm0L5p_MuPBwXvRr_Bg4tk_7SJyMsBBtAEyV5G67mhoqMd-A8UC04Lr0yERfWrBCIQV5T5XOM7aINXpF70BXwyMHUOl8Hdt9bqeGonJMmeBq-A8oGGSUE8_WwfApMqouGV0fOcj8mYxiRMyB9kCwFWj1RJabKZ0NqSQgCQS4P69gVCORmt3uMUS3SfUD3dQs01Jo8xIfcMsecAK7CyYKI5oEV4-4"/>
+</div>
+<div class="flex flex-col">
+<p class="text-white text-xs font-semibold">Admin User</p>
+<p class="text-slate-400 text-[10px]">versepro@church.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto relative bg-background-light dark:bg-background-dark">
+<div class="flex-1 max-w-[1200px] w-full mx-auto p-6 md:p-8 flex flex-col gap-6">
+<!-- BREADCRUMBS -->
+<div class="flex flex-wrap items-center gap-2">
+<a class="text-[#9da6b9] text-sm font-medium hover:text-white transition-colors" href="#">Settings</a>
+<span class="material-symbols-outlined text-[#9da6b9] text-base">chevron_right</span>
+<span class="text-white text-sm font-medium">User Management</span>
+</div>
+<!-- HEADER -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-white text-3xl font-black leading-tight tracking-[-0.033em]">User Management</h1>
+<p class="text-[#9da6b9] text-base font-normal">Manage access and permissions for your projection team</p>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/25 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New User</span>
+</button>
+</div>
+<!-- STATS -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="bg-card-dark rounded-xl p-5 border border-slate-700/50 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-[#9da6b9] text-sm font-medium">Total Users</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-md text-[20px]">group</span>
+</div>
+<p class="text-white text-2xl font-bold">12</p>
+<p class="text-emerald-500 text-xs font-medium flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +2 this month
+                        </p>
+</div>
+<div class="bg-card-dark rounded-xl p-5 border border-slate-700/50 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-[#9da6b9] text-sm font-medium">Active Operators</p>
+<span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-1.5 rounded-md text-[20px]">cast_connected</span>
+</div>
+<p class="text-white text-2xl font-bold">4</p>
+<p class="text-[#9da6b9] text-xs font-medium mt-1">Currently online</p>
+</div>
+<div class="bg-card-dark rounded-xl p-5 border border-slate-700/50 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-[#9da6b9] text-sm font-medium">Pending Invites</p>
+<span class="material-symbols-outlined text-amber-500 bg-amber-500/10 p-1.5 rounded-md text-[20px]">mail</span>
+</div>
+<p class="text-white text-2xl font-bold">2</p>
+<p class="text-[#9da6b9] text-xs font-medium mt-1">Awaiting response</p>
+</div>
+</div>
+<!-- TOOLBAR (Search & Filter) -->
+<div class="flex flex-col sm:flex-row gap-3">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#9da6b9]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg leading-5 bg-card-dark text-white placeholder-[#9da6b9] focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm" placeholder="Search users by name, email or role..." type="text"/>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<select class="appearance-none bg-card-dark text-white pl-4 pr-10 py-2.5 rounded-lg border-none focus:ring-2 focus:ring-primary text-sm font-medium cursor-pointer">
+<option>All Roles</option>
+<option>Admin</option>
+<option>Operator</option>
+<option>Viewer</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#9da6b9]">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<select class="appearance-none bg-card-dark text-white pl-4 pr-10 py-2.5 rounded-lg border-none focus:ring-2 focus:ring-primary text-sm font-medium cursor-pointer">
+<option>All Status</option>
+<option>Active</option>
+<option>Suspended</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#9da6b9]">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- USER TABLE -->
+<div class="bg-card-dark rounded-xl border border-slate-700/50 overflow-hidden flex flex-col shadow-lg">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-slate-700/50">
+<thead class="bg-[#1e293b]">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-semibold text-[#9da6b9] uppercase tracking-wider" scope="col">User</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-[#9da6b9] uppercase tracking-wider" scope="col">Role</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-[#9da6b9] uppercase tracking-wider" scope="col">Permissions</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-[#9da6b9] uppercase tracking-wider" scope="col">Last Active</th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-[#9da6b9] uppercase tracking-wider" scope="col">Status</th>
+<th class="relative px-6 py-4" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700/50 bg-card-dark">
+<!-- Row 1 -->
+<tr class="hover:bg-[#333b4d] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="John Doe" class="h-10 w-10 rounded-full object-cover" data-alt="Avatar of John Doe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXogay9RDMRxB1XcBikzjYx68WL6sZ_TXLs6cSp12SSWPYSHcDG6px9-aJs0LiBt2ejQkWqaSzY4OwVGCvpTIf-5888cxv9dSP31wd1MBt6NvPvHe3hZ_jBrMEdo4ZCtha4GQ2N9PdkxohfRJ1VFt52NRs6mhHCZX_rH4BcjlBel4RpiR9bAE-s7UgiznqObSAL27HFQSa6-9JZkNk9OzFjsWnDnG9tUqwZEhM_aNoPqmG3HpwMQ5Doq3X0XvlZBrcd7wNN7OP_Ps"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-white">John Doe</div>
+<div class="text-sm text-[#9da6b9]">john@church.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-primary/20 text-blue-300 border border-primary/30">
+                                            Admin
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-white">Full Access</div>
+<div class="text-xs text-[#9da6b9]">Manage settings &amp; users</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#9da6b9]">
+                                        2 mins ago
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+<span class="text-sm text-white">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-[#9da6b9] hover:text-white transition-colors p-2 rounded-full hover:bg-slate-700">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#333b4d] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Sarah Smith" class="h-10 w-10 rounded-full object-cover" data-alt="Avatar of Sarah Smith" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsNFJ4t870nrALf5vXWjb-48NMWDxC7f_0iuqX_3YRothmD2andtVDMoIpyG6ybccd-T9dbZIUbi3dd_2wwQk2XVy6LI07zl-uCkUBa8QyUKoi1kyMylMnaiIvoIP7JjVQKjWk4saHvptOChS62d7WXXRFdfHJz6gfDNyGeaRR1FUdYBdVYCVzeuVSLTdg7iQbMVcrSZneqHvbhnO3EaPjAYnO_md1mnaGb5Uz43EevlsEeB8QlOg7bTnYhraBiV50P9F5_pAlHTs"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-white">Sarah Smith</div>
+<div class="text-sm text-[#9da6b9]">sarah@church.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                            Operator
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-white">Projection Only</div>
+<div class="text-xs text-[#9da6b9]">Run services</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#9da6b9]">
+                                        Yesterday
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+<span class="text-sm text-white">Active</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-[#9da6b9] hover:text-white transition-colors p-2 rounded-full hover:bg-slate-700">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#333b4d] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Mark Wilson" class="h-10 w-10 rounded-full object-cover" data-alt="Avatar of Mark Wilson" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8ZIVwzh_wDBpR3QTUtLMDi_1bBqWt8VhMlcW3aAMmY7O-OiIWy7LPqe3FQrHCdHFNWpDpxDCzHokUijO3ih92ku9hOA-b7qjXAG3g2g2Qih-a3o-2Qb2lwxQ7MW31Ife_HpMT30oVuO_9i4L_bwuFYeMtaS_rOgxkNW6XrtRLtuqCslx2czBEXbr0ShgzOWNvw_y3g8CKprDL1HSrbyUe2m7NKVqAf-Fn_gyMIYdpbfoV9tS5nlw0hsLt2qKU-rE6U0rfQtez424"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-white">Mark Wilson</div>
+<div class="text-sm text-[#9da6b9]">mark@church.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                                            Viewer
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-white">Read Only</div>
+<div class="text-xs text-[#9da6b9]">View logs &amp; stats</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#9da6b9]">
+                                        3 days ago
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-slate-500"></div>
+<span class="text-sm text-slate-400">Offline</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-[#9da6b9] hover:text-white transition-colors p-2 rounded-full hover:bg-slate-700">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#333b4d] transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center">
+<div class="flex-shrink-0 h-10 w-10">
+<img alt="Emily Davis" class="h-10 w-10 rounded-full object-cover grayscale opacity-70" data-alt="Avatar of Emily Davis" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtAqGMycIW3R5hkOzzVHEZiu7yQhVM3FgtDrTwO8vwlGIhFCR-0G_8ZiiZTwMtjkACcSiFivFvML6HIHwvjswh0yGv3QZOPKzRNfzfZlqVZHzmV1KcIihJlnjxe9QcC0M5pLXwA38XH9aG-odMAc3SEogosHuJwFP594k3xBr9R6vZcox5KM-9_0s1sGZRjpVdqvgc6zxgqJ0Xq7x4IpQe2anfaSLsD76q5L0D6DQ4bzzANqp7H0Mj5ZJuT5GRHM9dkmqDPngJCCM"/>
+</div>
+<div class="ml-4">
+<div class="text-sm font-medium text-slate-400">Emily Davis</div>
+<div class="text-sm text-[#9da6b9] opacity-60">emily@church.com</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-slate-700 text-slate-400 border border-slate-600">
+                                            Operator
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm text-slate-400">Suspended</div>
+<div class="text-xs text-[#9da6b9] opacity-60">No access</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-[#9da6b9]">
+                                        2 weeks ago
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+<span class="text-sm text-red-400">Suspended</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<button class="text-[#9da6b9] hover:text-white transition-colors p-2 rounded-full hover:bg-slate-700">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="bg-[#1e293b] px-6 py-3 flex items-center justify-between border-t border-slate-700/50">
+<div class="text-xs text-[#9da6b9]">
+                            Showing <span class="font-medium text-white">1</span> to <span class="font-medium text-white">4</span> of <span class="font-medium text-white">12</span> results
+                        </div>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-[#282e39] text-[#9da6b9] text-xs hover:bg-[#333b4d] hover:text-white transition-colors disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 rounded bg-[#282e39] text-[#9da6b9] text-xs hover:bg-[#333b4d] hover:text-white transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

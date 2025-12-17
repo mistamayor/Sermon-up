@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LumenVerse AI - Live Projection</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#135bec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#1c2333", 
+              "surface-darker": "#161b26",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            animation: {
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#282e39] bg-white dark:bg-[#111318] px-6 py-3 shrink-0 z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] hidden md:block">LumenVerse</h2>
+</div>
+<div class="hidden lg:flex items-center gap-3 px-4 py-1.5 rounded-lg bg-slate-100 dark:bg-surface-dark border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">mic</span>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase text-slate-500 tracking-wider leading-none mb-0.5">Input Source</span>
+<select class="bg-transparent border-none p-0 text-xs font-bold text-slate-800 dark:text-white focus:ring-0 cursor-pointer w-32 truncate">
+<option>Focusrite USB Audio</option>
+<option>MacBook Pro Mic</option>
+<option>System Audio</option>
+</select>
+</div>
+<div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-1" title="Signal Detected"></div>
+</div>
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-surface-dark rounded-full p-1 border border-slate-200 dark:border-slate-700">
+<button class="px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-md ring-2 ring-primary/20">
+                Moderated
+            </button>
+<button class="px-4 py-1.5 rounded-full text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white transition-all">
+                Auto-Pilot
+            </button>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mr-2">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+<span class="text-xs font-bold text-emerald-500">Live</span>
+</div>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-slate-100 dark:bg-[#282e39] hover:bg-slate-200 dark:hover:bg-[#3b4354] transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300" style="font-size: 20px;">wifi</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-slate-100 dark:bg-[#282e39] hover:bg-slate-200 dark:hover:bg-[#3b4354] transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300" style="font-size: 20px;">settings</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-primary text-white">
+<span class="material-symbols-outlined" style="font-size: 20px;">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<main class="flex-1 flex flex-col p-4 md:p-6 gap-6 overflow-y-auto bg-slate-50 dark:bg-[#0b0e14]">
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500 animate-pulse" style="font-size: 18px; font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Live Output (Active)</h3>
+</div>
+<div class="hidden md:flex items-center text-sm font-medium bg-white dark:bg-surface-dark rounded-md border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+<button class="px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transition-colors">
+                            Psalm
+                        </button>
+<button class="px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transition-colors">
+                            23
+                        </button>
+<button class="px-3 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            1
+                        </button>
+</div>
+</div>
+<div class="flex gap-3 text-xs font-medium text-slate-500 dark:text-slate-500">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">aspect_ratio</span> 1920x1080</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">speed</span> 60fps</span>
+</div>
+</div>
+<div class="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl bg-black group ring-1 ring-slate-900/10 dark:ring-white/10">
+<div class="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBN6mkQ43XWxTgsiLhZXnRIzohvfFZz97DwBRz6jrYH2-1CXr8c4-1qawmQmVMRojvwz63pBUw8cNrwzdH9zz3LFkmqEUe8k0FS6C0lc2nARp4ed1I4cJDUrpnLNt7xZcYQbil605fpMM08Be8qaVBzoW3ZWTY98W3mxPa4Hwj3r1SuIJ8UX85xK4stXdo2zGxdvGUma_0roKouCHu3-ahev3Qfhm2iQD4RQYFoo8aSkrBQSz2LwvKzLyON9jtMpW2KSI9MUhSJ-U");'>
+<div class="absolute inset-0 bg-black/40"></div>
+</div>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 md:p-12 lg:p-16">
+<h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg mb-6 max-w-5xl leading-tight">
+                        "The Lord is my shepherd, I lack nothing."
+                    </h1>
+<div class="inline-flex items-center px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/20">
+<p class="text-lg md:text-xl text-slate-100 font-semibold drop-shadow-md">
+                            Psalm 23:1 <span class="text-slate-300 ml-1 text-base">(NIV)</span>
+</p>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded shadow-lg animate-pulse">
+                    Live
+                </div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+<button class="bg-black/60 hover:bg-black/80 text-white p-2 rounded-lg backdrop-blur-sm transition-colors" title="Fullscreen">
+<span class="material-symbols-outlined" style="font-size: 20px;">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-red-500/50 hover:bg-red-500/5 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-red-500 transition-colors" style="font-size: 24px;">block</span>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-red-500">Blackout</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-blue-500 transition-colors" style="font-size: 24px;">ac_unit</span>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-blue-500">Freeze</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-amber-500/50 hover:bg-amber-500/5 transition-all group shadow-sm">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-amber-500 transition-colors" style="font-size: 24px;">branding_watermark</span>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover:text-amber-500">Logo</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all group shadow-sm ring-1 ring-emerald-500/20 bg-emerald-500/5">
+<span class="material-symbols-outlined text-emerald-500 transition-colors" style="font-size: 24px; font-variation-settings: 'FILL' 1;">image</span>
+<span class="text-xs font-bold text-emerald-500">Theme</span>
+</button>
+</div>
+<div class="flex flex-col flex-1 min-h-0 gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10">
+<span class="material-symbols-outlined text-primary" style="font-size: 14px;">graphic_eq</span>
+</div>
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Live Transcription</h3>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-medium text-slate-400">High Confidence</span>
+<button class="text-xs font-bold text-primary hover:underline">View History</button>
+</div>
+</div>
+<div class="flex-1 w-full rounded-xl bg-white dark:bg-[#111318] border border-slate-200 dark:border-slate-700 p-6 relative overflow-hidden shadow-inner group">
+<div class="absolute top-4 right-4 flex items-center gap-2 px-2 py-1 bg-slate-100 dark:bg-surface-dark rounded-md border border-slate-200 dark:border-slate-700 z-10">
+<div class="flex gap-0.5 items-end h-3">
+<div class="w-0.5 bg-primary animate-[bounce_1s_infinite] h-2"></div>
+<div class="w-0.5 bg-primary animate-[bounce_1.2s_infinite] h-3"></div>
+<div class="w-0.5 bg-primary animate-[bounce_0.8s_infinite] h-1.5"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Listening</span>
+</div>
+<div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white dark:from-[#111318] to-transparent z-10 pointer-events-none"></div>
+<div class="flex flex-col justify-end h-full gap-4 relative z-0">
+<div class="space-y-4">
+<p class="text-lg text-slate-300 dark:text-slate-500 font-medium">
+                            ...it is a time to reflect on the goodness that surrounds us every day. Even in the valley...
+                        </p>
+<p class="text-lg text-slate-400 dark:text-slate-400 font-medium">
+                            We must hold onto the promises that have been given to us from the beginning.
+                        </p>
+<div class="relative pl-4 border-l-4 border-amber-500/50">
+<p class="text-xl md:text-2xl font-semibold text-slate-800 dark:text-white leading-relaxed">
+                                And as it says in <span class="text-amber-500 bg-amber-500/10 px-1 rounded mx-1">Jeremiah 29:11</span>, "For I know the plans I have for you," declares the Lord...
+                            </p>
+<div class="absolute -top-6 left-4 flex items-center gap-1.5 bg-amber-500 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded-full shadow-lg shadow-amber-500/20 transform -translate-y-1 animate-bounce">
+<span class="material-symbols-outlined text-[12px]">search_check</span>
+                                Match Found
+                            </div>
+</div>
+<p class="text-lg text-slate-300 dark:text-slate-600 font-medium animate-pulse">
+                            plans to prosper you and not to harm you, plans to give you hope...
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-[400px] bg-white dark:bg-[#111318] border-l border-slate-200 dark:border-[#282e39] flex flex-col shrink-0 z-10 shadow-xl">
+<div class="p-4 border-b border-slate-200 dark:border-[#282e39] bg-slate-50 dark:bg-[#161b26]">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Bible Translation</h3>
+<div class="flex items-center gap-2">
+<label class="relative inline-flex items-center cursor-pointer group">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-8 h-4 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[0px] after:left-[0px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-500"></div>
+<span class="ml-2 text-[10px] font-bold text-slate-500 peer-checked:text-indigo-500 uppercase">Auto-Switch</span>
+</label>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<select class="w-full pl-3 pr-8 py-2 text-sm font-semibold rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-primary focus:border-primary cursor-pointer appearance-none shadow-sm">
+<option value="NIV">New International Version (NIV)</option>
+<option value="ESV">English Standard Version (ESV)</option>
+<option value="KJV">King James Version (KJV)</option>
+<option value="NKJV">New King James Version (NKJV)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-slate-500">
+<span class="material-symbols-outlined" style="font-size: 20px;">arrow_drop_down</span>
+</div>
+</div>
+<button class="p-2 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-primary text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col border-b border-slate-200 dark:border-[#282e39] bg-amber-50/50 dark:bg-[#2a2212]/30">
+<div class="px-4 py-3 flex items-center justify-between">
+<h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+</span>
+            Approval Queue
+        </h3>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-white dark:bg-surface-dark border border-amber-200 dark:border-amber-800 shadow-sm" title="Auto-Dismiss Timer">
+<span class="material-symbols-outlined text-amber-500" style="font-size: 14px;">timer</span>
+<select class="bg-transparent border-none p-0 pr-3 text-[10px] font-bold text-slate-600 dark:text-slate-300 focus:ring-0 cursor-pointer h-auto leading-none w-11">
+<option value="15">15s</option>
+<option value="30">30s</option>
+<option value="60">60s</option>
+<option value="off">Off</option>
+</select>
+</div>
+<span class="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800">Active</span>
+</div>
+</div>
+<div class="px-4 pb-4 space-y-3">
+<div class="bg-white dark:bg-surface-dark rounded-xl border-2 border-amber-500/30 shadow-xl shadow-amber-500/5 relative overflow-hidden ring-1 ring-amber-500/20 group">
+<div class="bg-amber-500/10 border-b border-amber-500/20 relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 bg-amber-500/10 w-[40%] z-0 border-r border-amber-500/20 transition-all duration-1000 ease-linear"></div>
+<div class="p-2.5 flex justify-between items-center relative z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-[16px]">psychology</span>
+<span class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">Pending</span>
+<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500 text-white shadow-sm animate-pulse">
+<span class="material-symbols-outlined text-[10px]">timer</span>
+<span class="text-[10px] font-bold tabular-nums">0:08</span>
+</div>
+</div>
+<span class="text-[10px] font-mono text-slate-400">Match 98%</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-start justify-between mb-2">
+<h4 class="text-lg font-bold text-slate-900 dark:text-white">Jeremiah 29:11</h4>
+<span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600">NIV</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4 border-l-2 border-slate-200 dark:border-slate-700 pl-3">
+                    For I know the plans I have for you,” declares the Lord, “plans to prosper you and not to harm you...
+                </p>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-red-500 dark:hover:text-red-400 text-xs font-bold transition-all group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">close</span>
+                        Dismiss
+                    </button>
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-primary hover:bg-blue-600 text-white shadow-lg shadow-primary/25 text-xs font-bold transition-all group">
+<span class="material-symbols-outlined text-[18px] group-hover:scale-110 transition-transform">check</span>
+                        Approve
+                    </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-lg border border-slate-200 dark:border-slate-700 p-3 opacity-60 hover:opacity-100 transition-all cursor-pointer group">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-300 text-[18px]">history</span>
+<div>
+<h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">Romans 8:28</h4>
+</div>
+</div>
+<span class="text-[10px] font-medium text-slate-400">1m ago</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col min-h-0 overflow-hidden bg-white dark:bg-[#111318]">
+<div class="p-4 pb-2">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</div>
+<input class="w-full py-2.5 pl-10 pr-10 rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-surface-dark text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-primary focus:border-primary shadow-sm" placeholder="Search verse manually..." type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2">
+<kbd class="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded">⌘K</kbd>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 pt-0 gap-3 flex flex-col">
+<h4 class="text-xs font-bold uppercase text-slate-400 tracking-wider mt-2 mb-1 px-1">Quick Select</h4>
+<div class="group p-3 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-md cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<h5 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">Romans 15:13</h5>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        May the God of hope fill you with all joy and peace as you trust in him...
+                    </p>
+<div class="h-0 group-hover:h-8 overflow-hidden transition-all duration-300 mt-0 group-hover:mt-2">
+<button class="w-full py-1.5 text-xs font-bold text-white bg-primary hover:bg-blue-600 rounded">Project</button>
+</div>
+</div>
+<div class="group p-3 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-md cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<h5 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">Hebrews 11:1</h5>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        Now faith is confidence in what we hope for and assurance about what we do not see.
+                    </p>
+<div class="h-0 group-hover:h-8 overflow-hidden transition-all duration-300 mt-0 group-hover:mt-2">
+<button class="w-full py-1.5 text-xs font-bold text-white bg-primary hover:bg-blue-600 rounded">Project</button>
+</div>
+</div>
+<div class="group p-3 rounded-lg bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-md cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<h5 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors">Psalm 23:1</h5>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        The Lord is my shepherd, I lack nothing.
+                    </p>
+<div class="h-0 group-hover:h-8 overflow-hidden transition-all duration-300 mt-0 group-hover:mt-2">
+<button class="w-full py-1.5 text-xs font-bold text-white bg-primary hover:bg-blue-600 rounded">Project</button>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</body></html>
