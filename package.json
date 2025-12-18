@@ -2,6 +2,7 @@
   "name": "sermon-up",
   "version": "1.0.0",
   "description": "Real-Time Scripture Delivery System for Church Media Teams",
+  "type": "module",
   "main": "dist/main/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
