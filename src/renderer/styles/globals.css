@@ -1,5 +1,21 @@
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --color-primary: #135bec;
+  --color-background-light: #f6f6f8;
+  --color-background-dark: #101622;
+  --color-surface-dark: #1c2333;
+  --color-surface-darker: #161b26;
+  --color-border-dark: #282e39;
+  --color-text-secondary: #9da6b9;
+
+  --font-display: 'Inter', sans-serif;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
